@@ -46,7 +46,7 @@ function Index(props) {
     setLoader(true)
     const {id} = router.query
     try {
-      const res = await fetch(`http://localhost:3000/api/notes/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/api/notes/${id}`, {
         method: 'PUT',
         headers: {
           Accept: 'application/json',
@@ -78,7 +78,7 @@ function Index(props) {
     setIsDelete(true)
     const {id} = router.query
     try {
-      const res = await fetch(`http://localhost:3000/api/notes/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/api/notes/${id}`, {
         method: 'Delete',
       })
       setTimeout(() => {
@@ -245,7 +245,7 @@ function Index(props) {
 
 export default Index
 export async function getServerSideProps({query: {id}}) {
-  const res = await fetch(`http://localhost:3000/api/notes/${id}`)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/api/notes/${id}`)
   const data = await res.json()
   return {
     props: data, // will be passed to the page component as props

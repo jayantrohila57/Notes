@@ -8,7 +8,6 @@ function Index(props) {
   const [form, setForm] = useState({title: '', description: ''})
   const router = useRouter()
   const [Success, setSuccess] = useState(false)
-
   const handleSubmit = (e) => {
     e?.preventDefault()
     const success = createNote(form)
@@ -82,7 +81,7 @@ function Index(props) {
 
 export default Index
 export async function getServerSideProps() {
-  const res = await fetch(`http://localhost:3000/api/notes`)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/api/notes`)
   const data = await res.json()
   return {
     props: data, // will be passed to the page component as props

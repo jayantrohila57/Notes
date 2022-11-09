@@ -30,7 +30,7 @@ function Index(props) {
     setLoader(true)
 
     try {
-      const res = await fetch('http://localhost:3000/api/notes', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/api/notes`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -72,7 +72,7 @@ function Index(props) {
         duration: 0.2,
       }}>
       <div className="flex flex-row flex-wrap justify-start bg-slate-900">
-        {/* <main className="flex  flex-col w-[30vw] justify-center bg-slate-900 items-center">
+        <main className="flex  flex-col w-[30vw] justify-center bg-slate-900 items-center">
           <div className="flex  top-32 right-40 flex-wrap flex-col m-1">
             <div className="flex flex-col">
               <form onSubmit={handleSubmit} className="flex flex-col">
@@ -131,7 +131,7 @@ function Index(props) {
               </form>
             </div>
           </div>
-        </main>{' '} */}
+        </main>{' '}
         <main className="flex  justify-center h-screen flex-col  bg-slate-900 ">
           <div className="flex justify-center p-5 space-x-10 items-end h-[30vh] ">
             <h1 className="text-gray-200 font-bold text-4xl">
@@ -169,7 +169,7 @@ function Index(props) {
 
 export default Index
 export async function getServerSideProps() {
-  const res = await fetch(`http://localhost:3000/api/notes`)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/api/notes`)
   const data = await res.json()
   return {
     props: data, // will be passed to the page component as props

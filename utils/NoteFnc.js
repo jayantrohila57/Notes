@@ -1,7 +1,6 @@
-const url = 'http://localhost:3000'
 export const createNote = async (form) => {
   try {
-    const response = await fetch(`${url}/api/notes`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/api/notes`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -13,13 +12,12 @@ export const createNote = async (form) => {
     const success = await JSON.stringify(data?.success)
     return success
   } catch (error) {
-    throw new Error(response?.status)
+    console.log(error)
   }
 }
-
 export const editNote = async (form) => {
   try {
-    const response = await fetch(`${url}/api/notes/${id}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/api/notes/${id}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -35,7 +33,7 @@ export const editNote = async (form) => {
 }
 export const deleteNote = async (id) => {
   try {
-    const response = await fetch(`${url}/api/notes/${id}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/api/notes/${id}`, {
       method: 'Delete',
     })
     const data = await response.json()
