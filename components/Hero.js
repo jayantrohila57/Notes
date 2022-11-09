@@ -4,9 +4,9 @@ import React from 'react'
 
 function Hero() {
   return (
-    <section className="text-gray-400 bg-slate-900 body-font">
+    <section className="text-gray-400 body-font">
       <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
-        <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
+        <div className="lg:max-w-md lg:w-full md:w-2/3 w-5/6 mb-10 md:mb-0">
           <div>
             <svg data-name="Layer 1" className="h-60 w-60 md:h-96 md:w-96" width="737.38976" height="544" viewBox="0 0 737.38976 544">
               <path
@@ -298,14 +298,44 @@ function Hero() {
           </div>
         </div>
         <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
-          <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-white">Notes</h1>
-          <p className="mb-8 leading-relaxed text-lg">Notes is a note taking app developed by Jayant Rohila. It is provide saving notes capability.</p>
-          <div className="flex w-full md:justify-start justify-center items-end">
+          <h1 className="title-font sm:text-4xl text-4xl mb-4 font-bold text-white">
+            <svg className="w-9 h-9 mb-2  text-indigo-500 inline" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+            </svg>
+            Notes
+          </h1>
+          <p className="mb-8 font-thin  leading-6 text-lg">
+            Notes is a simple note taking App.
+            <br /> Notes save on cloud securely and are accessible anywhere.
+          </p>
+          <div className="p-5 flex w-full md:justify-start justify-center items-end">
             <Link href="/SignIn">
-              <button className="inline-flex m-1 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded text-lg">SignIn</button>
+              <button className="inline-flex m-1 items-center justify-center px-4 py-2.5 text-lg font-bold text-center text-gray-100 bg-gray-900 rounded-2xl hover:bg-gray-700 focus:ring-4 focus:ring-gray-900 dark:focus:ring-gray-900">
+                <svg viewBox="0 0 48 48" className="h-6 mr-2 w-6">
+                  <path
+                    fill="#FFC107"
+                    d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
+                  />
+                  <path
+                    fill="#FF3D00"
+                    d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
+                  />
+                  <path
+                    fill="#4CAF50"
+                    d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
+                  />
+                  <path
+                    fill="#1976D2"
+                    d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
+                  />
+                </svg>
+                Google
+              </button>{' '}
             </Link>
             <Link href="/Notes">
-              <button className="inline-flex m-1 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Get Started</button>
+              <button className="inline-flex m-1 items-center justify-center px-4 py-2.5 text-lg font-medium text-center text-gray-100 bg-indigo-900 rounded-2xl hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-900">
+                Get started
+              </button>
             </Link>
           </div>
         </div>

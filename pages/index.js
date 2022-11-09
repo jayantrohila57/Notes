@@ -3,9 +3,9 @@ import Hero from '../components/Hero'
 import {motion} from 'framer-motion'
 
 const variants = {
-  hidden: {opacity: 0, x: 0, y: 200},
+  hidden: {opacity: 0, x: 0, y: 0},
   enter: {opacity: 1, x: 0, y: 0},
-  exit: {opacity: 0, x: 0, y: -300},
+  exit: {opacity: 0, x: 0, y: 0},
 }
 export default function Home() {
   return (
@@ -16,7 +16,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <motion.main initial="hidden" animate="enter" exit="exit" variants={variants} transition={{type: 'spring', stiffness: 80, duration: 0.2}}>
-        <main className="flex h-screen justify-center bg-slate-900 items-center">
+        <main className="flex h-screen justify-center  items-center">
           <Hero />
         </main>{' '}
       </motion.main>

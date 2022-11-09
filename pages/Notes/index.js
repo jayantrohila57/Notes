@@ -1,65 +1,32 @@
 import React, {useState, useEffect} from 'react'
-import useSWR from 'swr'
-import Card from '../../components/Card'
+import {createNote} from '../../utils/NoteFnc'
 import {useRouter} from 'next/router'
+import Link from 'next/link'
 import {motion} from 'framer-motion'
 
-const variants = {
-  hidden: {opacity: 0, x: 0, y: 200},
-  enter: {opacity: 1, x: 0, y: 0},
-  exit: {opacity: 0, x: 0, y: -300},
-}
-function Index(props) {
+function Notes(props) {
+  const [Open, setOpen] = useState(false)
   const data = props.data
   const [form, setForm] = useState({title: '', description: ''})
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [Loader, setLoader] = useState(false)
   const router = useRouter()
-
-  useEffect(() => {
-    if (isSubmitting === true) {
-      createNote()
-      setIsSubmitting(false)
-    } else {
-      setIsSubmitting(false)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSubmitting, Loader])
-  //--Create note--------------------------------------------------------------------------
-  const createNote = async () => {
-    setLoader(true)
-
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/api/notes`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form),
-      })
-
-      setTimeout(() => {
-        setLoader(false)
-        router.reload(window.location.pathname)
-      }, 2000)
-    } catch (error) {
-      console.log(error)
-    }
+  const [Loader, setLoader] = useState(false)
+  const [Success, setSuccess] = useState(false)
+  const variants = {
+    open: {opacity: 1, x: 0},
+    closed: {opacity: 1, x: 0},
+    hidden: {opacity: 0, x: 0, y: 0},
+    enter: {opacity: 1, x: 0, y: 0},
+    exit: {opacity: 0, x: 0, y: 0},
   }
-  //------------------------------------------------------------------------
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e?.target?.name]: e?.target?.value,
-    })
-  }
-  //------Setup submit note----------------------------------------------------------
   const handleSubmit = (e) => {
     e?.preventDefault()
-    setIsSubmitting(true)
+    setLoader(true)
+    const success = createNote(form)
+    success?.then((value) => {
+      setSuccess(value)
+      router.reload(window.location.pathname)
+    })
   }
-  //------------------------------------------------------------------------
   return (
     <motion.main
       initial="hidden"
@@ -71,40 +38,86 @@ function Index(props) {
         stiffness: 80,
         duration: 0.2,
       }}>
-      <div className="flex flex-row flex-wrap justify-start bg-slate-900">
-        <main className="flex  flex-col w-[30vw] justify-center bg-slate-900 items-center">
-          <div className="flex  top-32 right-40 flex-wrap flex-col m-1">
-            <div className="flex flex-col">
-              <form onSubmit={handleSubmit} className="flex flex-col">
-                <h1 className="flex text-2xl mb-5 items-center justify-center text-gray-100">
-                  <svg className="w-6 h-6 inline mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                  </svg>
-                  Create new Note
-                </h1>
+      <div className="bg-black text-white relative">
+        <div className="overflow-hidden h-[100vh] ">
+          <div className="flex justify-between px-5 items-center h-20">
+            <Link href={`/`}>
+              <h1 className="title-font sm:text-4xl text-4xl font-bold text-white">
+                <svg className="w-9 h-9 mb-2  text-indigo-500 inline" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                </svg>
+                Notes
+              </h1>
+            </Link>
+            <div className="border-gray-800 bg-indigo-900 bg-opacity-20 p-2 text-gray-500 rounded-xl border m-2 text-xl ">
+              Total Notes<p className="inline text-indigo-500 font-bold"> {data.length}</p>
+            </div>
+          </div>
+          <div className="h-screen scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-300 overflow-y-scroll  dark:scrollbar-thumb-indigo-900 dark:scrollbar-track-black">
+            <div className="flex justify-center items-center md:flex-wrap md:flex-row-reverse flex-col-reverse">
+              {data?.map((note, index) => {
+                return (
+                  <Link key={index} href={`/Notes/${note?._id}`}>
+                    <div className="m-2 p-2 relative">
+                      <div className="p-5 h-80 w-80 bg-gray-900  rounded-3xl ">
+                        <h5 className="mb-2 text-3xl break-words leading-10 font-bold tracking-tight text-gray-900 dark:text-white">{note?.title}</h5>
+                        <p className="font-thin text-xl break-words leading-6 text-gray-700 dark:text-gray-400">{note?.description}</p>
+                      </div>
+                      <div className="absolute bottom-2 right-2">
+                        <svg className="w-12 h-12 text-indigo-500 -rotate-45" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            fillRule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+            <div className="h-40"></div>
+          </div>
+        </div>
+        <div className="relative bottom-10 right-2">
+          <motion.div
+            layout
+            animate={Open === false ? 'open' : 'closed'}
+            variants={variants}
+            transition={{type: 'spring', stiffness: 80, duration: 0.4}}
+            className={
+              Open === false
+                ? 'text-white absolute bottom-0 right-0 bg-gray-900 transition-all focus:ring-4 h-14 w-14 duration-300  focus:outline-none focus:ring-gray-300 font-medium rounded-3xl text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-gray-900  dark:focus:ring-gray-800'
+                : 'text-white absolute bottom-0 right-0 transition-all bg-gray-900 duration-300 font-medium rounded-3xl  h-[80vh] w-80 text-sm p-1 text-center inline-flex items-center mr-2 '
+            }>
+            <div className="absolute duration-300  top-10 flex shadow-2xl pr-4  w-80  m-1 justify-start flex-col">
+              <form onSubmit={handleSubmit} className="flex ml-2 flex-col">
+                <h1 className="flex text-2xl mb-5 items-center duration-500 justify-center text-gray-100">Create Note</h1>
                 <div className="relative mb-4">
-                  <label htmlFor="email" className="leading-7 text-sm text-gray-400">
-                    Title
-                  </label>
                   <input
                     type="title"
                     required
+                    placeholder="Title"
                     id="title"
                     name="title"
-                    onChange={handleChange}
-                    className="w-full shadow-xl bg-slate-800 rounded border border-gray-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    onChange={(e) => {
+                      setForm({...form, [e?.target?.name]: e?.target?.value})
+                    }}
+                    className="w-full shadow-xl  bg-slate-800 rounded-xl border border-gray-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-500 ease-in-out"
                   />
                 </div>
                 <div className="relative mb-4">
-                  <label htmlFor="message" className="leading-7 text-sm text-gray-400">
-                    Description
-                  </label>
                   <textarea
                     id="description"
+                    placeholder="Description"
                     required
                     name="description"
-                    onChange={handleChange}
-                    className="w-full bg-slate-800 shadow-xl rounded border border-gray-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-900 h-32 text-base outline-none text-gray-100 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+                    onChange={(e) => {
+                      setForm({...form, [e?.target?.name]: e?.target?.value})
+                    }}
+                    className="w-full bg-slate-800 shadow-xl rounded-xl border border-gray-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-900 h-32 text-base outline-none text-gray-100 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                  />
                 </div>
                 {Loader === true ? (
                   <button
@@ -124,50 +137,62 @@ function Index(props) {
                     Loading...
                   </button>
                 ) : (
-                  <button className="text-white shadow-xl type='submit' bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+                  <button
+                    className={
+                      Open === true
+                        ? "text-white shadow-xl type='submit' bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded-xl text-lg"
+                        : 'duration-300 border-gray-900 hidden bg-gray-900 border-0 text-xs text-gray-900'
+                    }>
                     Create Note
                   </button>
                 )}
               </form>
             </div>
-          </div>
-        </main>{' '}
-        <main className="flex  justify-center h-screen flex-col  bg-slate-900 ">
-          <div className="flex justify-center p-5 space-x-10 items-end h-[30vh] ">
-            <h1 className="text-gray-200 font-bold text-4xl">
-              <svg className="w-9 h-9 inline mb-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  fillRule="evenodd"
-                  d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              All Notes
-            </h1>
-          </div>
 
-          {data ? (
-            <div className="h-[100vh] scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-300 overflow-y-scroll dark:scrollbar-thumb-gray-700 dark:scrollbar-track-gray-800">
-              <div className="flex overflow-hidden justify-center items-center pt-5 flex-col-reverse">
-                {data?.map((note, index) => {
-                  return <Card key={index} title={note?.title} id={note?._id} dec={note?.description} />
-                })}
-              </div>
+            <div className="absolute bottom-1 right-2">
+              {Open === false ? (
+                <button
+                  onClick={() => {
+                    setOpen(true)
+                  }}
+                  type="button">
+                  {' '}
+                  <svg className="w-10 h-10 text-indigo-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    setOpen(false)
+                  }}
+                  type="button">
+                  <svg className="w-10 h-10 text-indigo-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+              )}
             </div>
-          ) : (
-            <div className="flex h-full overflow-hidden justify-start items-center pt-5 flex-col">
-              <div className="p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800" role="alert">
-                <span className="font-medium">Info alert!</span> No Notes to show yet, Create Your Notes to see them here.
-              </div>
-            </div>
-          )}
-        </main>
-      </div>
+          </motion.div>
+        </div>{' '}
+        <div className="fixed bottom-0 flex p-2 bg-black w-full items-center justify-center">
+          <p className="text-xs font-thin text-gray-500   sm:border-gray-200 ">
+            Copyright © 2020 Notes —
+            <a href="https://twitter.com/jayant_rohila" className="text-gray-500 ml-1" rel="noopener noreferrer" target="_blank">
+              @jayantrohila57
+            </a>
+          </p>
+        </div>
+      </div>{' '}
     </motion.main>
   )
 }
 
-export default Index
+export default Notes
 export async function getServerSideProps() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/api/notes`)
   const data = await res.json()
