@@ -38,49 +38,58 @@ function Notes(props) {
         stiffness: 80,
         duration: 0.2,
       }}>
-      <div className="bg-black text-white relative">
+      <div className="bg-gradient-to-b from-[#001327] via-[#002335] to-[#030310] text-white relative">
         <div className="relative overflow-hidden h-screen ">
           <div className="flex justify-between px-5 items-center h-20">
             <Link href={`/`}>
-              <h1 className="title-font sm:text-4xl text-4xl font-bold text-white">
+              <div className="title-font sm:text-4xl text-4xl font-bold text-white">
                 <svg className="w-9 h-9 mb-2  text-blue-500 inline" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                 </svg>
                 Notes
-              </h1>
+              </div>
             </Link>
-            <div className="border-gray-800 bg-blue-900 bg-opacity-20 p-2 text-gray-500 rounded-xl border m-2 text-xl ">
-              Total Notes<p className="inline text-blue-500 font-bold"> {data.length}</p>
+
+            <div className="border-gray-800 bg-blue-900 bg-opacity-20 p-2 text-gray-200 rounded-xl border m-2 text-base">
+              Total Notes<div className="inline text-blue-500 font-bold"> {data.length}</div>
             </div>
           </div>
-          <div className="h-screen scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-300 overflow-y-scroll  dark:scrollbar-thumb-blue-900 dark:scrollbar-track-black">
-            <div className="flex justify-end items-center md:flex-wrap md:flex-row-reverse flex-col-reverse">
+          <div className="h-screen scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-300 overflow-y-scroll  dark:scrollbar-thumb-gray-800 dark:scrollbar-track-gray-900">
+            <div className="flex justify-center items-center md:flex-row-reverse flex-col-reverse w-screen md:flex-wrap ">
               {data?.map((note, index) => {
                 return (
-                  <Link key={index} href={`/Notes/${note?._id}`}>
-                    <div className="m-2 p-2 relative">
-                      <div className="p-5 h-72 w-72 bg-blue-900  rounded-3xl ">
-                        <h5 className="mb-2 text-3xl break-words leading-10 font-bold tracking-tight text-gray-900 dark:text-white">{note?.title}</h5>
-                        <p className="font-thin text-xl break-words leading-6 text-gray-700 dark:text-gray-100">{note?.description}</p>
+                  <motion.button
+                    key={index}
+                    whileHover={{
+                      scale: 0.95,
+                      transition: {duration: 0.2},
+                    }}
+                    whileTap={{scale: 0.9}}>
+                    <Link href={`/Notes/${note?._id}`}>
+                      <div className="flex p-2 items-start m-1 justify-start relative">
+                        <div className="p-5 text-start h-72 md:w-72 w-80 shadow-2xl bg-[#ffffff36]  rounded-3xl ">
+                          <div className="mb-2 text-3xl break-words leading-10 font-bold tracking-tight text-gray-100 ">{note?.title}</div>
+                          <div className="font-thin text-xl break-words leading-6 text-gray-700 dark:text-gray-100">{note?.description}</div>
+                        </div>
+                        <div className="absolute bottom-2 right-2">
+                          <svg className="w-12 h-12 text-gray-100 -rotate-45" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              fillRule="evenodd"
+                              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </div>
                       </div>
-                      <div className="absolute bottom-2 right-2">
-                        <svg className="w-12 h-12 text-blue-500 -rotate-45" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                          <path
-                            fillRule="evenodd"
-                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                  </Link>
+                    </Link>
+                  </motion.button>
                 )
               })}
             </div>
             <div className="h-40"></div>
           </div>
         </div>
-        <div className={Open === true ? 'top-0 z-10 absolute h-screen w-full duration-700 backdrop-blur-md' : 'duration-700 backdrop-blur-none'}>
+        <div className={Open === true ? 'top-0 z-10 absolute h-screen w-full duration-300 bg-gray-900 bg-opacity-90' : 'duration-300 bg-gray-900 bg-opacity-0'}>
           <div className="absolute bottom-10 right-2">
             <motion.div
               layout
@@ -89,12 +98,12 @@ function Notes(props) {
               transition={{type: 'spring', stiffness: 80, duration: 0.4}}
               className={
                 Open === false
-                  ? 'text-white absolute z-20 bottom-10 right-0 bg-gray-900 transition-all focus:ring-4 h-14 w-14 duration-700  focus:outline-none focus:ring-gray-300 font-medium rounded-3xl text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-gray-900  dark:focus:ring-gray-800'
-                  : 'text-white absolute z-20 bottom-10 right-0 overflow-hidden  transition-all bg-gray-900 duration-700 font-medium rounded-3xl  h-[80vh] w-80 text-sm p-1 text-center inline-flex items-center mr-2 '
+                  ? 'text-white absolute z-20 bottom-10 right-0  shadow-2xl bg-[#302d2d36] transition-all focus:ring-4 h-14 w-14 duration-300  focus:outline-none focus:ring-gray-300 font-medium rounded-3xl text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-gray-900  dark:focus:ring-gray-800'
+                  : 'text-white absolute z-20 bottom-10 right-0 overflow-hidden  transition-all  shadow-2xl bg-[#254758] md:h-[80vh]  duration-300 font-medium rounded-3xl md:w-96  h-[60vh] w-80 text-sm p-1 text-center inline-flex items-center mr-2 '
               }>
-              <div className="absolute duration-300  top-10 flex shadow-2xl pr-4  w-80  m-1 justify-start flex-col">
+              <div className="absolute duration-300 top-10 flex  pr-4  md:w-96 w-80  m-1 justify-start flex-col">
                 <form onSubmit={handleSubmit} className={Open === false ? 'hidden  ml-2 flex-col' : 'overflow-hidden flex ml-2 flex-col'}>
-                  <h1 className="flex text-2xl mb-5 items-center duration-500 justify-center text-gray-100">Create Note</h1>
+                  <div className="flex text-2xl mb-5 items-center duration-500 justify-center text-gray-100">Create Note</div>
                   <div className="relative mb-4">
                     <input
                       type="title"
@@ -180,14 +189,6 @@ function Notes(props) {
               </div>
             </motion.div>
           </div>
-        </div>
-        <div className="fixed bottom-0 flex p-2 bg-black w-full items-center justify-center">
-          <p className="text-xs font-thin text-gray-500   sm:border-gray-200 ">
-            Copyright © 2020 Notes —
-            <a href="https://twitter.com/jayant_rohila" className="text-gray-500 ml-1" rel="noopener noreferrer" target="_blank">
-              @jayantrohila57
-            </a>
-          </p>
         </div>
       </div>{' '}
     </motion.main>
