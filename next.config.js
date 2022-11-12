@@ -1,17 +1,12 @@
 /** @type {import('next').NextConfig} */
 
-const nextConfig = {
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+})
+
+module.exports = withPWA({
   reactStrictMode: true,
-
-  extends: 'next',
-  rules: {
-    'react/no-unescaped-entities': 'off',
-    '@next/next/no-page-custom-font': 'off',
-  },
-
-  images: {
-    domains: ['https://unsplash.com/'],
-  },
-}
-
-module.exports = nextConfig
+  swcMinify: true,
+})
