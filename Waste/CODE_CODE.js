@@ -4,15 +4,15 @@
   })
 }
 
-;<motion.div
+;;<motion.div
   layout
   animate={Open === false ? 'open' : 'closed'}
   variants={variants}
   transition={{type: 'spring', stiffness: 80, duration: 0.2}}
   className={
     Open === false
-      ? 'text-white bg-indigo-500 transition-all hover:bg-indigo-800 focus:ring-4 	duration-1000 focus:outline-none focus:ring-indigo-300 font-medium rounded-3xl text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800'
-      : 'text-white relative transition-all bg-indigo-500 	duration-1000 font-medium rounded-3xl  h-[70vh]  w-80 text-sm p-1.5 text-center inline-flex items-center mr-2 '
+      ? 'text-white bg-blue-500 transition-all hover:bg-blue-800 focus:ring-4 	duration-1000 focus:outline-none focus:ring-blue-300 font-medium rounded-3xl text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+      : 'text-white relative transition-all bg-blue-500 	duration-1000 font-medium rounded-3xl  h-[70vh]  w-80 text-sm p-1.5 text-center inline-flex items-center mr-2 '
   }>
   {Open === false ? (
     <button

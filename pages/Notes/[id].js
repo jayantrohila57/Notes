@@ -3,9 +3,9 @@ import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {motion} from 'framer-motion'
 const variants = {
-  hidden: {opacity: 0, x: 0, y: 0},
+  hidden: {opacity: 0, x: 0, y: 800},
   enter: {opacity: 1, x: 0, y: 0},
-  exit: {opacity: 0, x: 0, y: 0},
+  exit: {opacity: 0, x: 0, y: -800},
 }
 function Index(props) {
   const data = props.data
@@ -101,10 +101,21 @@ function Index(props) {
         duration: 0.2,
       }}>
       <section className=" text-gray-600 bg-black min-h-screen flex flex-col body-font justify-start items-center">
-        <div className="my-5 items-start">
+        <div className="my-5 flex justify-between flex-row items-center">
+          <Link href={'/Notes'}>
+            <div className="m-4">
+              <svg className="w-10 h-10 text-gray-100 mb-1 mr-1 inline" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+          </Link>
           <Link href={`/`}>
             <h1 className="title-font sm:text-4xl text-4xl font-bold text-white">
-              <svg className="w-10 h-10 mr-2 inline mb-2 text-indigo-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <svg className="w-10 h-10 mr-2 inline mb-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
                 <path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd" />
               </svg>
@@ -121,7 +132,7 @@ function Index(props) {
               name="title"
               value={form.title}
               onChange={handleChange}
-              className="w-full h-36 text-indigo-500 bg-gray-100 bg-opacity-0 rounded text-4xl break-words leading-10 font-bold tracking-tight outline-none  transition-colors duration-200 ease-in-out"
+              className="w-full h-36 text-blue-500 bg-gray-100 bg-opacity-0 rounded text-4xl break-words leading-10 font-bold tracking-tight outline-none  transition-colors duration-200 ease-in-out"
             />
             <textarea
               id="description"
@@ -137,7 +148,7 @@ function Index(props) {
           <div className="m-2">
             {' '}
             {Loader === true ? (
-              <button disabled type="button" className="p-2 text-white shadow-xl  bg-indigo-500 border-0  focus:outline-none hover:bg-indigo-600 rounded-2xl text-lg">
+              <button disabled type="button" className="p-2 text-white shadow-xl  bg-blue-500 border-0  focus:outline-none hover:bg-blue-600 rounded-2xl text-lg">
                 <svg role="status" className="inline w-10 h-10 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
@@ -150,7 +161,7 @@ function Index(props) {
                 </svg>
               </button>
             ) : (
-              <button className="text-white shadow-xl type='submit' bg-indigo-500 border-0 p-2 focus:outline-none hover:bg-indigo-600 rounded-2xl text-lg">
+              <button className="text-white shadow-xl type='submit' bg-blue-500 border-0 p-2 focus:outline-none hover:bg-blue-600 rounded-2xl text-lg">
                 <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                   <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
                   <path
@@ -164,20 +175,6 @@ function Index(props) {
           </div>
         </form>{' '}
         <div className="flex flex-row">
-          <Link href={'/Notes'}>
-            <div className="m-4">
-              <button className="text-white font-semibold shadow-xl px-3 py-2  bg-indigo-500 border-0 p-1 focus:outline-none hover:bg-indigo-600 rounded-2xl text-2xl">
-                <svg className="w-8 h-8 mb-1 mr-1 inline" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                Go Back
-              </button>
-            </div>
-          </Link>
           <div className="m-4">
             {isDelete === true ? (
               <button disabled type="button" className="p-2  px-10 text-white shadow-xl  bg-red-500 border-0  focus:outline-none hover:bg-red-600 rounded-2xl text-lg">

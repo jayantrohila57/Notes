@@ -14,9 +14,9 @@ function Notes(props) {
   const variants = {
     open: {opacity: 1, x: 0},
     closed: {opacity: 1, x: 0},
-    hidden: {opacity: 0, x: 0, y: 0},
+    hidden: {opacity: 0, x: 0, y: 800},
     enter: {opacity: 1, x: 0, y: 0},
-    exit: {opacity: 0, x: 0, y: 0},
+    exit: {opacity: 0, x: 0, y: -800},
   }
   const handleSubmit = (e) => {
     e?.preventDefault()
@@ -43,28 +43,28 @@ function Notes(props) {
           <div className="flex justify-between px-5 items-center h-20">
             <Link href={`/`}>
               <h1 className="title-font sm:text-4xl text-4xl font-bold text-white">
-                <svg className="w-9 h-9 mb-2  text-indigo-500 inline" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-9 h-9 mb-2  text-blue-500 inline" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                 </svg>
                 Notes
               </h1>
             </Link>
-            <div className="border-gray-800 bg-indigo-900 bg-opacity-20 p-2 text-gray-500 rounded-xl border m-2 text-xl ">
-              Total Notes<p className="inline text-indigo-500 font-bold"> {data.length}</p>
+            <div className="border-gray-800 bg-blue-900 bg-opacity-20 p-2 text-gray-500 rounded-xl border m-2 text-xl ">
+              Total Notes<p className="inline text-blue-500 font-bold"> {data.length}</p>
             </div>
           </div>
-          <div className="h-screen scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-300 overflow-y-scroll  dark:scrollbar-thumb-indigo-900 dark:scrollbar-track-black">
-            <div className="flex justify-center items-center md:flex-wrap md:flex-row-reverse flex-col-reverse">
+          <div className="h-screen scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-300 overflow-y-scroll  dark:scrollbar-thumb-blue-900 dark:scrollbar-track-black">
+            <div className="flex justify-end items-center md:flex-wrap md:flex-row-reverse flex-col-reverse">
               {data?.map((note, index) => {
                 return (
                   <Link key={index} href={`/Notes/${note?._id}`}>
                     <div className="m-2 p-2 relative">
-                      <div className="p-5 h-80 w-80 bg-gray-900  rounded-3xl ">
+                      <div className="p-5 h-72 w-72 bg-blue-900  rounded-3xl ">
                         <h5 className="mb-2 text-3xl break-words leading-10 font-bold tracking-tight text-gray-900 dark:text-white">{note?.title}</h5>
-                        <p className="font-thin text-xl break-words leading-6 text-gray-700 dark:text-gray-400">{note?.description}</p>
+                        <p className="font-thin text-xl break-words leading-6 text-gray-700 dark:text-gray-100">{note?.description}</p>
                       </div>
                       <div className="absolute bottom-2 right-2">
-                        <svg className="w-12 h-12 text-indigo-500 -rotate-45" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <svg className="w-12 h-12 text-blue-500 -rotate-45" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                           <path
                             fillRule="evenodd"
                             d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -105,7 +105,7 @@ function Notes(props) {
                       onChange={(e) => {
                         setForm({...form, [e?.target?.name]: e?.target?.value})
                       }}
-                      className="w-full shadow-xl  bg-slate-800 rounded-xl border border-gray-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-500 ease-in-out"
+                      className="w-full shadow-xl  bg-slate-800 rounded-xl border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-500 ease-in-out"
                     />
                   </div>
                   <div className="relative mb-4">
@@ -117,14 +117,14 @@ function Notes(props) {
                       onChange={(e) => {
                         setForm({...form, [e?.target?.name]: e?.target?.value})
                       }}
-                      className="w-full bg-slate-800 shadow-xl rounded-xl border border-gray-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-900 h-32 text-base outline-none text-gray-100 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                      className="w-full bg-slate-800 shadow-xl rounded-xl border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-900 h-32 text-base outline-none text-gray-100 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
                     />
                   </div>
                   {Loader === true ? (
                     <button
                       disabled
                       type="button"
-                      className="text-white shadow-xl type='submit' bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+                      className="text-white shadow-xl type='submit' bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg">
                       <svg role="status" className="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                           d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
@@ -141,7 +141,7 @@ function Notes(props) {
                     <button
                       className={
                         Open === true
-                          ? "text-white shadow-xl type='submit' bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded-xl text-lg"
+                          ? "text-white shadow-xl type='submit' bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded-xl text-lg"
                           : 'duration-300 border-gray-900 hidden bg-gray-900 border-0 text-xs text-gray-900'
                       }>
                       Create Note
@@ -181,7 +181,6 @@ function Notes(props) {
             </motion.div>
           </div>
         </div>
-
         <div className="fixed bottom-0 flex p-2 bg-black w-full items-center justify-center">
           <p className="text-xs font-thin text-gray-500   sm:border-gray-200 ">
             Copyright © 2020 Notes —

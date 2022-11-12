@@ -299,7 +299,7 @@ function Hero() {
         </div>
         <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
           <h1 className="title-font sm:text-4xl text-4xl mb-4 font-bold text-white">
-            <svg className="w-9 h-9 mb-2  text-indigo-500 inline" fill="currentColor" viewBox="0 0 20 20">
+            <svg className="w-9 h-9 mb-2  text-blue-500 inline" fill="currentColor" viewBox="0 0 20 20">
               <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
             </svg>
             Notes
@@ -333,7 +333,7 @@ function Hero() {
               </button>{' '}
             </Link>
             <Link href="/Notes">
-              <button className="inline-flex m-1 items-center justify-center px-4 py-2.5 text-lg font-medium text-center text-gray-100 bg-indigo-900 rounded-2xl hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-900">
+              <button className="inline-flex m-1 items-center justify-center px-4 py-2.5 text-lg font-medium text-center text-gray-100 bg-blue-900 rounded-2xl hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
                 Get started
               </button>
             </Link>
