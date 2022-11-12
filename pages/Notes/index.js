@@ -98,7 +98,7 @@ function Notes(props) {
               transition={{type: 'spring', stiffness: 80, duration: 0.4}}
               className={
                 Open === false
-                  ? 'text-white absolute z-20 bottom-10 right-0  shadow-2xl bg-[#302d2d36] transition-all focus:ring-4 h-14 w-14 duration-300  focus:outline-none focus:ring-gray-300 font-medium rounded-3xl text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-gray-900  dark:focus:ring-gray-800'
+                  ? 'text-white absolute z-20 bottom-10 right-0  shadow-2xl bg-[#254758] transition-all focus:ring-4 h-14 w-14 duration-300  focus:outline-none focus:ring-gray-300 font-medium rounded-3xl text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-gray-900  dark:focus:ring-gray-800'
                   : 'text-white absolute z-20 bottom-10 right-0 overflow-hidden  transition-all  shadow-2xl bg-[#254758] md:h-[80vh]  duration-300 font-medium rounded-3xl md:w-96  h-[60vh] w-80 text-sm p-1 text-center inline-flex items-center mr-2 '
               }>
               <div className="absolute duration-300 top-10 flex  pr-4  md:w-96 w-80  m-1 justify-start flex-col">
@@ -126,14 +126,14 @@ function Notes(props) {
                       onChange={(e) => {
                         setForm({...form, [e?.target?.name]: e?.target?.value})
                       }}
-                      className="w-full bg-slate-800 shadow-xl rounded-xl border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-900 h-32 text-base outline-none text-gray-100 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                      className="w-full bg-slate-800 shadow-xl rounded-2xl border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-900 h-32 text-base outline-none text-gray-100 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
                     />
                   </div>
                   {Loader === true ? (
                     <button
                       disabled
                       type="button"
-                      className="text-white shadow-xl type='submit' bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg">
+                      className="text-white shadow-xl type='submit' bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded-2xl text-lg">
                       <svg role="status" className="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                           d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
@@ -150,7 +150,7 @@ function Notes(props) {
                     <button
                       className={
                         Open === true
-                          ? "text-white shadow-xl type='submit' bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded-xl text-lg"
+                          ? "text-white shadow-xl type='submit' bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded-2xl text-lg"
                           : 'duration-300 border-gray-900 hidden bg-gray-900 border-0 text-xs text-gray-900'
                       }>
                       Create Note

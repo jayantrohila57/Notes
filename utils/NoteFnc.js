@@ -15,7 +15,7 @@ export const createNote = async (form) => {
     console.log(error)
   }
 }
-export const editNote = async (form) => {
+export const editNote = async (form, id) => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/api/notes/${id}`, {
       method: 'PUT',

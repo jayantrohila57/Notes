@@ -307,8 +307,8 @@ export default function Home() {
                 <div className="title-font text-start sm:text-6xl leading-6 text-6xl mb-4 font-bold text-white">Notes</div>
                 <div className="mb-8 text-start font-normal leading-6 text-xl">Notes is a simple note taking App. Notes save on cloud securely and are accessible anywhere.</div>
               </div>
-              <div className="p-5 flex w-full md:justify-start justify-center items-end">
-                <Link href="/SignIn">
+              <div className="p-1 flex w-full md:justify-start justify-center items-end">
+                {/* <Link href="/SignIn">
                   <button className="inline-flex m-1 items-center justify-center px-4 py-2.5 text-lg font-bold text-center text-gray-100 bg-gray-900 rounded-2xl hover:bg-gray-700 focus:ring-4 focus:ring-gray-900 dark:focus:ring-gray-900">
                     <svg viewBox="0 0 48 48" className="h-6 mr-2 w-6">
                       <path
@@ -330,7 +330,7 @@ export default function Home() {
                     </svg>
                     Google
                   </button>
-                </Link>
+                </Link> */}
                 <Link href="/Notes">
                   <button className="inline-flex m-1 items-center justify-center px-4 py-2.5 text-lg font-medium text-center text-gray-100 bg-blue-900 rounded-2xl hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
                     Get started

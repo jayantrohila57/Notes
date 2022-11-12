@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {motion} from 'framer-motion'
+import {deleteNote, editNote} from '../../utils/NoteFnc'
 const variants = {
   hidden: {opacity: 0, x: 0, y: 800},
   enter: {opacity: 1, x: 0, y: 0},
@@ -11,10 +12,9 @@ function Index(props) {
   const data = props.data
   console.log(data)
   const [form, setForm] = useState({title: data?.title, description: data?.description})
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [Loader, setLoader] = useState(false)
   const [isDelete, setIsDelete] = useState(false)
-
+  const [Success, setSuccess] = useState(false)
   const router = useRouter()
   useEffect(
     () => {
@@ -25,73 +25,34 @@ function Index(props) {
     [],
     [data]
   )
-  useEffect(() => {
-    if (isDelete === true) {
-      handleDelete()
-    } else {
-      setIsDelete(false)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDelete])
-  useEffect(() => {
-    if (isSubmitting === true) {
-      editNote()
-      setIsSubmitting(false)
-    } else {
-      setIsSubmitting(false)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSubmitting, Loader])
-  const editNote = async () => {
-    setLoader(true)
+
+  const handleDelete = (e) => {
+    e?.preventDefault()
     const {id} = router.query
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/api/notes/${id}`, {
-        method: 'PUT',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form),
-      })
+    setIsDelete(true)
+    const success = deleteNote(id)
+    success?.then(() => {
+      setSuccess(true)
       setTimeout(() => {
-        setLoader(false)
         router.reload(window.location.pathname)
-      }, 2000)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
+      }, 8000)
+      setSuccess(false)
     })
   }
-  //------Setup submit note----------------------------------------------------------
   const handleSubmit = (e) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-  }
-  //------fetch  note by id----------------------------------------------------------
-  const handleDelete = async () => {
-    setIsDelete(true)
+    e?.preventDefault()
     const {id} = router.query
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/api/notes/${id}`, {
-        method: 'Delete',
-      })
-      setTimeout(() => {
-        router.push('/Notes')
-      }, 1000)
-    } catch (error) {
-      console.log(error)
-    }
+    setLoader(true)
+    const success = editNote(form, id)
+    success?.then((value) => {
+      setSuccess(value)
+      router.reload(window.location.pathname)
+    })
   }
-  //----------------------------------------------------------------
+
   return (
     <motion.main initial="hidden" animate="enter" exit="exit" variants={variants} transition={{type: 'spring', stiffness: 80, duration: 0.2}}>
-      <div className="bg-gradient-to-b min-h-screen w-screen flex flex-col justify-start from-[#001327] via-[#002335] to-[#030310] text-white">
+      <div className="relative bg-gradient-to-b min-h-screen w-screen flex flex-col justify-start from-[#001327] via-[#002335] to-[#030310] text-white">
         <div className="flex p-5 justify-start flex-row items-start">
           <Link href={`/`}>
             <h1 className="title-font sm:text-4xl text-4xl font-bold text-white">
@@ -103,9 +64,9 @@ function Index(props) {
             </h1>
           </Link>{' '}
         </div>
-        <div className="container w-screen justify-center align-middle mx-auto flex md:px-10 md:py-14 md:flex-row flex-col items-start">
+        <div className="container w-screen justify-center align-middle flex-wrap mx-auto flex md:px-10 md:py-14 md:flex-row flex-col items-start">
           <div className="lg:max-w-md lg:w-full md:w-2/3 w-5/6 mb-10 md:mb-0">
-            <svg className="h-60 md:block hidden w-60 md:h-96 md:w-96" width="362.52377" height="438.18799" viewBox="0 0 362.52377 438.18799">
+            <svg className="h-40 md:block hidden w-60 md:h-80 md:w-96" width="362.52377" height="438.18799" viewBox="0 0 362.52377 438.18799">
               <g>
                 <path
                   d="M336.47953,37.094H50.51956c-10.48999,0-19.02002,8.52997-19.02002,19.01996V252.07398c0,10.48999,8.53003,19.02002,19.02002,19.02002H336.47953c10.48999,0,19.02002-8.53003,19.02002-19.02002V56.11395c0-10.48999-8.53003-19.01996-19.02002-19.01996Z"
@@ -241,7 +202,9 @@ function Index(props) {
                     placeholder="Enter Title"
                     name="title"
                     value={form.title}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      setForm({...form, [e?.target?.name]: e?.target?.value})
+                    }}
                     className="w-full h-36 text-white bg-gray-100 bg-opacity-0 rounded text-4xl break-words leading-10 font-bold tracking-tight outline-none  transition-colors duration-200 ease-in-out"
                   />
                   <textarea
@@ -250,7 +213,9 @@ function Index(props) {
                     placeholder="Enter Description"
                     name="description"
                     value={form.description}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      setForm({...form, [e?.target?.name]: e?.target?.value})
+                    }}
                     className="w-full h-48 bg-gray-100 bg-opacity-0 rounded text-xl outline-none text-gray-100  resize-none leading-6 transition-colors duration-200 ease-in-out"
                   />
                 </div>
@@ -335,6 +300,42 @@ function Index(props) {
                 </div>
               </div>
             </form>
+          </div>
+        </div>
+        <div
+          className={
+            Success === false
+              ? 'absolute hidden bottom-20 left-10  items-center p-4 w-full max-w-xs text-gray-500 bg-[#001327] rounded-2xl shadow dark:text-gray-400 dark:bg-[#cecbcb46]'
+              : 'absolute bottom-20 left-10 duration-300 opacity-100 flex items-center p-4 w-full max-w-xs text-gray-500 bg-[#001327] rounded-2xl shadow dark:text-gray-400 dark:bg-[#cecbcb46]'
+          }
+          role="alert">
+          <div className="text-sm font-normal">
+            <svg className="w-6 h-6 inline - mr-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+              <path
+                fillRule="evenodd"
+                d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Note Updated.
+          </div>
+          <div className="flex items-center ml-auto space-x-2">
+            <button
+              type="button"
+              onClick={() => {
+                setSuccess(false)
+              }}
+              className="bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-opacity-0 dark:hover:bg-gray-700"
+              aria-label="Close">
+              <span className="sr-only">Close</span>
+              <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"></path>
+              </svg>
+            </button>
           </div>
         </div>
       </div>
